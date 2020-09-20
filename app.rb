@@ -9,6 +9,7 @@ def init_db
 	@db.results_as_hash = true
 end
 
+# before вызывается каждый раз пререзагрузке
 before do
 	init_db
 end
@@ -33,6 +34,11 @@ end
 
 post '/new' do
 	content = params[:content]
+
+	if content.length <= 0
+		@error = 'Type post text'
+		return erb :new
+	end
 
 	erb "You typed #{content}"
 end
